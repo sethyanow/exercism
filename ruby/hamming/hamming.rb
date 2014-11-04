@@ -2,15 +2,30 @@
 # Seth Yanow - Sept 2014
 
 class Hamming
+  attr_accessor :distance
 
-  def self.compute(strand1, strand2)
-    @length = [strand1.length, strand2.length].min - 1
-    @distance = 0
+  def self.compute(left, right)
 
-    for i in 0..@length
-      @distance += strand1[i] == strand2[i] ? 0 : 1
+    distance = 0
+
+    for i in 0..length(left, right)
+      distance += score(left, right, i)
     end
 
-    @distance
+    distance
   end
+
+  def self.match?(left, right, index)
+    left[index] == right[index]
+  end
+
+  def self.length(left, right)
+    [left.length, right.length].min - 1
+  end
+
+  def self.score(left, right, i)
+    match?(left, right, i) ? 0 : 1
+  end
+
+
 end
